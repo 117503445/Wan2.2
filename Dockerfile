@@ -1,5 +1,5 @@
 # Use a PyTorch image that includes CUDA and development tools (for nvcc)
-FROM pytorch/pytorch:2.2.2-cuda11.8-cudnn8-devel
+FROM pytorch/pytorch:2.8.0-cuda12.8-cudnn9-devel
 
 # Set environment variables for CUDA
 ENV CUDA_HOME=/usr/local/cuda
@@ -27,13 +27,17 @@ RUN grep -v "flash_attn" requirements.txt > requirements_temp.txt && \
 
 RUN pip install --upgrade typing-extensions
 # Install flash-attn (MUST be after CUDA is set)
-# RUN pip install flash-attn --no-build-isolation
+RUN pip install flash-attn --no-build-isolation
 
 # Install decord and librosa
 RUN pip install decord librosa
 
 # Set work directory (optional)
 WORKDIR /workspace
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
 # Default to interactive shell
 CMD ["/bin/bash"]
