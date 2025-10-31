@@ -27,7 +27,7 @@ RUN grep -v "flash_attn" requirements.txt > requirements_temp.txt && \
 
 RUN pip install --upgrade typing-extensions
 # Install flash-attn (MUST be after CUDA is set)
-RUN pip install flash-attn --no-build-isolation
+# RUN pip install flash-attn --no-build-isolation
 
 # Install decord and librosa
 RUN pip install decord librosa
